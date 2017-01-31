@@ -28,6 +28,8 @@ Use configuration to define the angularjs service endpoints to point to the corr
 
 Would have preferred to use CQRS pattern but felt not enough time to implement it.
 
+Some javascript validation would have been nice and usage of the promises returned from $http.
+
 
 
 
