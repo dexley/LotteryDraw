@@ -26,6 +26,8 @@ Ideally hosting options as at the moment IIS hosting is the only posibility but 
 
 Use configuration to define the angularjs service endpoints to point to the correct url.
 
+Would have preferred to use CQRS pattern but felt not enough time to implement it.
+
 
 
 
