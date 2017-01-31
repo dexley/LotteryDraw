@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="application" ng-app="lotteryDrawApp"><div ng-controller="lotteryDrawController as vm">
+    <label>Name</label><input type="text" ng-model="modelCreate.name"/><br/>
+    <label>Description</label><input type="text" ng-model="modelCreate.description"/><br/>
+    <label>Date of Draw</label><input type="text" ng-model="modelCreate.drawdate"/><br/>
+    <label>Total amount of primary numbers</label><input type="text" ng-model="modelCreate.totalPrimaryNumbers"/><br/>
+    <label>Range of primary numbers</label><input type="text" ng-model="modelCreate.primaryRange1"><input type="text" ng-model="model.primaryRange2"><br/>
+    <label>Total amount of secondary numbers</label><input type="text" ng-model="modelCreate.totalSecondaryNumbers"/><br/>
+    <label>Range of secondary numbers</label><input type="text" ng-model="modelCreate.secondaryRange1"><input type="text" id="rangeofprimarynumbers" ng-model="model.secondaryRange2"><br/>
+    <button  id="btn1" ng-click="vm.create()">Create</button>
+</div></div>
+
+@Scripts.Render("~/bundles/angularjs")
+
+<script type="text/javascript">
+    'use strict';
+    angular.module('lotteryDrawApp', [])
+        .controller('lotteryDrawController', ['lotteryDrawService', function (lotteryDrawService) {
+            function lotteryDrawController() {
+                var self = this;
+                self.repository = lotteryDrawService;
+                self.modelCreate = {
+                    name: "",
+                    description: "",
+                    drawdate: "",
+                    totalPrimaryNumbers: "",
+                    RangePrimaryNumbers: { item1: "", item2: "" },
+                    totalSecondaryNumbers: "",
+                    RangeSecondaryNumbers: { item1: "", item2: "" },
+                };
+            }
+
+            lotteryDrawController.prototype.create = function () {
+                var self = this;
+                self.repository.create(self.modelCreate);
+            }
+
+            return new lotteryDrawController();
+        }])
+       .service('lotteryDrawService', ['$http', '$q', function($http, $q) {
+           function lotteryDrawService() {
+               var self = this;
+               this.http = $http;
+           }           
+
+           lotteryDrawService.prototype.create = function (model) {
+               var model = JSON.stringify(model);
+               return this.http.post('http://localhost:50162/api/lottery', model);
+           }
+
+           lotteryDrawService.prototype.update = function (model) {
+               var model = JSON.stringify(model);
+               return this.http.put('http://localhost:50162/api/lottery', model);
+           }
+
+           lotteryDrawService.prototype.search = function () {
+           }
+
+           return new lotteryDrawService();
+        }]);
+</script>
